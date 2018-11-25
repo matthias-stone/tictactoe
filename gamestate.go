@@ -30,15 +30,15 @@ func (gs GameState) String() string {
 }
 
 const (
-	Pos1          = 0x3
-	Pos2          = 0xC
-	Pos3          = 0x30
-	Pos4          = 0xC0
-	Pos5          = 0x300
-	Pos6          = 0xC00
-	Pos7          = 0x3000
-	Pos8          = 0xC000
-	Pos9          = 0x30000
+	Pos1 GameState = 0x3 << (iota * 2)
+	Pos2
+	Pos3
+	Pos4
+	Pos5
+	Pos6
+	Pos7
+	Pos8
+	Pos9
 	TopMask       = Pos1 | Pos2 | Pos3 // 0x3C
 	MiddleMask    = Pos4 | Pos5 | Pos6 // 0xFC0
 	BottomMask    = Pos7 | Pos8 | Pos9 // 0x3F000
