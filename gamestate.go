@@ -89,3 +89,13 @@ func (gs GameState) Winner() GameState {
 		return Empty
 	}
 }
+
+func (gs GameState) AvailableMoves() []GameState {
+	moves := make([]GameState, 0, 9)
+	for i := Pos1; i <= Pos9; i = i << 2 {
+		if Empty == i&gs {
+			moves = append(moves, i)
+		}
+	}
+	return moves
+}

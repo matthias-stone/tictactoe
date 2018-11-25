@@ -60,3 +60,31 @@ func TestGameState_Winner(t *testing.T) {
 		assert.Equal(t, test.output, test.input.Winner(), test.name)
 	}
 }
+
+func BenchmarkWinner(b *testing.B) {
+	cases := []GameState{
+		0,
+		0x100,
+		0x200,
+		0x1,
+		0x2,
+		0x21212,
+		0x15555,
+		0x2AAAA,
+		0x1A966,
+		(Pos1 | Pos2 | Pos3) & allO,
+		(Pos4 | Pos5 | Pos6) & allX,
+		(Pos7 | Pos8 | Pos9) & allO,
+		(Pos1 | Pos4 | Pos7) & allX,
+		(Pos2 | Pos5 | Pos8) & allO,
+		(Pos3 | Pos6 | Pos9) & allX,
+		(Pos1 | Pos5 | Pos9) & allO,
+		(Pos3 | Pos5 | Pos7) & allX,
+	}
+
+	for i := 0; i < b.N; i++ {
+		for _, gs := range cases {
+			gs.Winner()
+		}
+	}
+}
