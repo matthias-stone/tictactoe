@@ -18,6 +18,14 @@ func TestGameState_String(t *testing.T) {
 		{"allO", 0x15555, "OOO\nOOO\nOOO\n"},
 		{"allX", 0x2AAAA, "XXX\nXXX\nXXX\n"},
 		{"complete", 0x1A966, "XOX\nOOX\nXXO\n"},
+		{"TopMask", (Pos1 | Pos2 | Pos3) & allO, "OOO\n---\n---\n"},
+		{"MiddleMask", (Pos4 | Pos5 | Pos6) & allX, "---\nXXX\n---\n"},
+		{"BottomMask", (Pos7 | Pos8 | Pos9) & allO, "---\n---\nOOO\n"},
+		{"LeftMask", (Pos1 | Pos4 | Pos7) & allX, "X--\nX--\nX--\n"},
+		{"CenterMask", (Pos2 | Pos5 | Pos8) & allO, "-O-\n-O-\n-O-\n"},
+		{"RightMask", (Pos3 | Pos6 | Pos9) & allX, "--X\n--X\n--X\n"},
+		{"AngleDownMask", (Pos1 | Pos5 | Pos9) & allO, "O--\n-O-\n--O\n"},
+		{"AngleUpMask", (Pos3 | Pos5 | Pos7) & allX, "--X\n-X-\nX--\n"},
 	}
 	for _, test := range tests {
 		assert.Equal(t, test.output, test.input.String(), test.name)
@@ -40,7 +48,7 @@ func TestGameState_Winner(t *testing.T) {
 		{"allX", 0x2AAAA, X},
 		{"complete", 0x1A966, Empty},
 		{"Top", 0x2A, X},
-		{"Middle", 0x510, O},
+		{"Middle", 0x540, O},
 		{"Bottom", 0x2A000, X},
 		{"Left", 0x1041, O},
 		{"Center", 0x8208, X},
