@@ -27,7 +27,7 @@ func (ro RandomOpportunistic) Move(gs, player GameState) GameState {
 		playerMask = allX
 	}
 	moves := gs.AvailableMoves()
-	for _, m := range gs.AvailableMoves() {
+	for _, m := range moves {
 		if ((playerMask & m) | gs).Winner() == player {
 			return m & playerMask
 		}
@@ -46,7 +46,7 @@ func (ro RandomSpoiler) Move(gs, player GameState) GameState {
 		playerMask, opponentMask = opponentMask, playerMask
 	}
 	moves := gs.AvailableMoves()
-	for _, m := range gs.AvailableMoves() {
+	for _, m := range moves {
 		if ((opponentMask & m) | gs).Winner() == player {
 			return m & playerMask
 		}
@@ -65,12 +65,12 @@ func (ro RandomOpportunisticSpoiler) Move(gs, player GameState) GameState {
 		playerMask, opponentMask = opponentMask, playerMask
 	}
 	moves := gs.AvailableMoves()
-	for _, m := range gs.AvailableMoves() {
+	for _, m := range moves {
 		if ((playerMask & m) | gs).Winner() == player {
 			return m & playerMask
 		}
 	}
-	for _, m := range gs.AvailableMoves() {
+	for _, m := range moves {
 		if ((opponentMask & m) | gs).Winner() == player {
 			return m & playerMask
 		}
