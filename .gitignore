@@ -1,3 +1,6 @@
 arena
+arena.exe
 !arena/
-
+trainer
+trainer.exe
+!trainer/
