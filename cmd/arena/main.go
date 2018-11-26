@@ -15,6 +15,7 @@ func main() {
 		tictactoe.RandomOpportunistic{},
 		tictactoe.RandomSpoiler{},
 		tictactoe.RandomOpportunisticSpoiler{},
+		tictactoe.MiniMax{},
 	}
 	rand.Seed(time.Now().UnixNano())
 
@@ -23,7 +24,7 @@ func main() {
 		for _, p2 := range players {
 			wg.Add(1)
 			go func(p1, p2 tictactoe.Player) {
-				r := compete(p1, p2, 10000000)
+				r := compete(p1, p2, 1000)
 				fmt.Printf("Draw: %d, %s: %d, %s: %d\n", r[0], p1.Name(), r[1], p2.Name(), r[2])
 				wg.Done()
 			}(p1, p2)

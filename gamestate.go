@@ -29,6 +29,23 @@ func (gs GameState) String() string {
 	return string(s)
 }
 
+func GameStateFromString(s string) GameState {
+	var gs GameState
+	for _, c := range s {
+		switch c {
+		case 'O':
+			gs |= O << 18
+		case 'X':
+			gs |= X << 18
+		case '-':
+		default:
+			gs = gs << 2
+		}
+		gs = gs >> 2
+	}
+	return gs
+}
+
 const (
 	Pos1 GameState = 0x3 << (iota * 2)
 	Pos2

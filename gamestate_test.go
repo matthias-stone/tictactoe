@@ -29,6 +29,7 @@ func TestGameState_String(t *testing.T) {
 	}
 	for _, test := range tests {
 		assert.Equal(t, test.output, test.input.String(), test.name)
+		assert.Equal(t, test.input, GameStateFromString(test.output), test.name)
 	}
 }
 
