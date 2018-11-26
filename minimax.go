@@ -1,6 +1,7 @@
 package tictactoe
 
 import (
+	"fmt"
 	"math/rand"
 )
 
@@ -61,4 +62,24 @@ func (mm MiniMax) recurse(gs, player, opponent, playerMask, opponentMask GameSta
 		}
 	}
 	return -1
+}
+
+// MiniMaxSometimesRandom will play randomly the fraction specified.
+// 0 = never, 1 = always.
+type MiniMaxSometimesRandom float64
+
+func (mmsr MiniMaxSometimesRandom) Name() string {
+	return fmt.Sprintf("minimax-sometimes-random-%0.3f", mmsr)
+}
+
+func (mmsr MiniMaxSometimesRandom) Move(gs, player GameState) GameState {
+	playerMask := GameState(allO)
+	if player == X {
+		playerMask = GameState(allX)
+	}
+	if float64(mmsr) > rand.Float64() {
+		moves := gs.AvailableMoves()
+		return moves[rand.Int()%len(moves)] & playerMask
+	}
+	return MiniMax{}.Move(gs, player)
 }

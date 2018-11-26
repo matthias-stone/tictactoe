@@ -16,6 +16,9 @@ func main() {
 		tictactoe.RandomSpoiler{},
 		tictactoe.RandomOpportunisticSpoiler{},
 		tictactoe.MiniMax{},
+		tictactoe.MiniMaxSometimesRandom(0.95),
+		tictactoe.MiniMaxSometimesRandom(0.75),
+		tictactoe.MiniMaxSometimesRandom(0.5),
 	}
 	rand.Seed(time.Now().UnixNano())
 
