@@ -25,3 +25,9 @@ func TestMiniMax_Move(t *testing.T) {
 		assert.Equal(t, test.output, m.Move(GameStateFromString(test.input), X).String(), test.name)
 	}
 }
+
+func BenchmarkMiniMax(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		MiniMax{}.Move(0, X)
+	}
+}
