@@ -22,13 +22,14 @@ func main() {
 	}
 	rand.Seed(time.Now().UnixNano())
 
+	fmt.Println(" win/loss/draw  Players")
 	wg := sync.WaitGroup{}
 	for i, p1 := range players {
 		for _, p2 := range players[i:] {
 			wg.Add(1)
 			go func(p1, p2 tictactoe.Player) {
-				r := compete(p1, p2, 1000)
-				fmt.Printf("Draw: %d, %s: %d, %s: %d\n", r[0], p1.Name(), r[1], p2.Name(), r[2])
+				r := compete(p1, p2, 100)
+				fmt.Printf("%4d %4d %4d  %s vs %s\n", r[1], r[2], r[0], p1.Name(), p2.Name())
 				wg.Done()
 			}(p1, p2)
 		}
