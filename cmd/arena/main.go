@@ -39,10 +39,8 @@ func main() {
 func compete(first, second tictactoe.Player, rounds int) [3]int {
 	var p1, p2 tictactoe.Player
 	results := [3]int{}
-	j := 0
 loop:
-	for j < rounds {
-		j++
+	for j := 0; j < rounds; j++ {
 		active, inactive := tictactoe.X, tictactoe.O
 		currentPlayer, nextPlayer := 1, 2
 		if j&1 == 1 {
@@ -58,7 +56,7 @@ loop:
 			gs |= m
 			if gs.Winner() != tictactoe.Empty {
 				results[currentPlayer] += 1
-				goto loop
+				continue loop
 			}
 			p1, p2 = p2, p1
 			active, inactive = inactive, active
