@@ -23,8 +23,8 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 
 	wg := sync.WaitGroup{}
-	for _, p1 := range players {
-		for _, p2 := range players {
+	for i, p1 := range players {
+		for _, p2 := range players[i:] {
 			wg.Add(1)
 			go func(p1, p2 tictactoe.Player) {
 				r := compete(p1, p2, 1000)
