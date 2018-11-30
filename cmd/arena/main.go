@@ -16,8 +16,8 @@ func main() {
 		tictactoe.RandomSpoiler{},
 		tictactoe.RandomOpportunisticSpoiler{},
 		tictactoe.MiniMax{},
-		tictactoe.MiniMaxSometimesRandom(0.95),
-		tictactoe.MiniMaxSometimesRandom(0.75),
+		tictactoe.MiniMaxSometimesRandom(0.05),
+		tictactoe.MiniMaxSometimesRandom(0.25),
 		tictactoe.MiniMaxSometimesRandom(0.5),
 	}
 	rand.Seed(time.Now().UnixNano())
@@ -28,7 +28,7 @@ func main() {
 		for _, p2 := range players[i:] {
 			wg.Add(1)
 			go func(p1, p2 tictactoe.Player) {
-				r := compete(p1, p2, 100)
+				r := compete(p1, p2, 1000)
 				fmt.Printf("%4d %4d %4d  %s vs %s\n", r[1], r[2], r[0], p1.Name(), p2.Name())
 				wg.Done()
 			}(p1, p2)
@@ -67,7 +67,3 @@ loop:
 	}
 	return results
 }
-
-// func Println(gs tictactoe.GameState) {
-// 	fmt.Printf(strings.Replace(gs.String(), "\n", " ", 2))
-// }

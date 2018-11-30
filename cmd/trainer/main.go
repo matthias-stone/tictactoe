@@ -18,7 +18,7 @@ func main() {
 	testResults(rl)
 	train(rl, tictactoe.MiniMaxSometimesRandom(0.5), 10000)
 	testResults(rl)
-	train(rl, tictactoe.MiniMaxSometimesRandom(0.5), 100000)
+	train(rl, tictactoe.MiniMaxSometimesRandom(0.5), 50000)
 	testResults(rl)
 }
 
@@ -84,17 +84,17 @@ loop:
 }
 
 func printHeader() {
-	fmt.Printf("     random        0.5 minimax      0.9 minimax        minimax\n")
+	fmt.Printf("     random            self         0.1 minimax        minimax\n")
 	fmt.Printf(" win/loss/draw    win/loss/draw    win/loss/draw    win/loss/draw\n")
 }
 
 func testResults(rl *tictactoe.ReinforcementLearning) {
 	rounds := 1000
 	var (
-		r1 = compete(rl, tictactoe.RandomOpportunisticSpoiler{}, rounds)
-		r2 = compete(rl, tictactoe.MiniMaxSometimesRandom(0.5), rounds)
-		r3 = compete(rl, tictactoe.MiniMaxSometimesRandom(0.1), rounds)
-		r4 = compete(rl, tictactoe.MiniMaxSometimesRandom(0.0), rounds)
+		r1, _ = timeCompeteAndDuration(rl, tictactoe.RandomOpportunisticSpoiler{}, rounds)
+		r2, _ = timeCompeteAndDuration(rl, rl, rounds)
+		r3, _ = timeCompeteAndDuration(rl, tictactoe.MiniMaxSometimesRandom(0.1), rounds)
+		r4, _ = timeCompeteAndDuration(rl, tictactoe.MiniMax{}, rounds)
 	)
 
 	fmt.Printf("%4d %4d %4d   %4d %4d %4d   %4d %4d %4d   %4d %4d %4d\n",
@@ -103,4 +103,10 @@ func testResults(rl *tictactoe.ReinforcementLearning) {
 		r3[1], r3[2], r3[0],
 		r4[1], r4[2], r4[0],
 	)
+}
+
+func timeCompeteAndDuration(p1, p2 tictactoe.Player, rounds int) ([3]int, time.Duration) {
+	t := time.Now()
+	r := compete(p1, p2, rounds)
+	return r, time.Now().Sub(t)
 }
