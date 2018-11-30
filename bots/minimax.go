@@ -1,20 +1,22 @@
-package tictactoe
+package bots
 
 import (
 	"fmt"
 	"math/rand"
+
+	"github.com/matthias-stone/tictactoe"
 )
 
 type MiniMax struct{}
 
 func (mm MiniMax) Name() string { return "minimax" }
 
-func (mm MiniMax) Move(gs, player GameState) GameState {
-	playerMask, opponentMask := GameState(allO), GameState(allX)
-	opponent := X
-	if player == X {
+func (mm MiniMax) Move(gs, player tictactoe.GameState) tictactoe.GameState {
+	playerMask, opponentMask := tictactoe.GameState(tictactoe.AllO), tictactoe.GameState(tictactoe.AllX)
+	opponent := tictactoe.X
+	if player == tictactoe.X {
 		playerMask, opponentMask = opponentMask, playerMask
-		opponent = O
+		opponent = tictactoe.O
 	}
 	moves := gs.AvailableMoves()
 	values := make([]int, len(moves))
@@ -37,7 +39,7 @@ func (mm MiniMax) Move(gs, player GameState) GameState {
 	return moves[rand.Int()%len(moves)] & playerMask
 }
 
-func (mm MiniMax) recurse(gs, player, opponent, playerMask, opponentMask GameState) int {
+func (mm MiniMax) recurse(gs, player, opponent, playerMask, opponentMask tictactoe.GameState) int {
 	moves := gs.AvailableMoves()
 	if len(moves) == 0 {
 		return 0
@@ -72,10 +74,10 @@ func (mmsr MiniMaxSometimesRandom) Name() string {
 	return fmt.Sprintf("minimax-sometimes-random-%0.3f", mmsr)
 }
 
-func (mmsr MiniMaxSometimesRandom) Move(gs, player GameState) GameState {
-	playerMask := GameState(allO)
-	if player == X {
-		playerMask = GameState(allX)
+func (mmsr MiniMaxSometimesRandom) Move(gs, player tictactoe.GameState) tictactoe.GameState {
+	playerMask := tictactoe.GameState(tictactoe.AllO)
+	if player == tictactoe.X {
+		playerMask = tictactoe.GameState(tictactoe.AllX)
 	}
 	if float64(mmsr) > rand.Float64() {
 		moves := gs.AvailableMoves()

@@ -1,11 +1,13 @@
-package tictactoe
+package bots
 
 import (
 	"math/rand"
+
+	"github.com/matthias-stone/tictactoe"
 )
 
 // Note that states where playing as O, and playing as X, never overlap.
-type ReinforcementLearning [Pos9]float32
+type ReinforcementLearning [tictactoe.Pos9]float32
 
 func NewReinforcementLearning() *ReinforcementLearning {
 	rl := ReinforcementLearning{}
@@ -16,10 +18,10 @@ func NewReinforcementLearning() *ReinforcementLearning {
 }
 func (rl *ReinforcementLearning) Name() string { return "reinforcement-learning" }
 
-func (rl *ReinforcementLearning) Move(gs, player GameState) GameState {
-	playerMask := GameState(allO)
-	if player == X {
-		playerMask = GameState(allX)
+func (rl *ReinforcementLearning) Move(gs, player tictactoe.GameState) tictactoe.GameState {
+	playerMask := tictactoe.GameState(tictactoe.AllO)
+	if player == tictactoe.X {
+		playerMask = tictactoe.GameState(tictactoe.AllX)
 	}
 
 	moves := gs.AvailableMoves()
@@ -48,19 +50,19 @@ const (
 
 type ReinforcementLearningTrainer struct {
 	rl       *ReinforcementLearning
-	lastMove GameState
+	lastMove tictactoe.GameState
 }
 
 func NewReinforcementLearningTrainer(rl *ReinforcementLearning) *ReinforcementLearningTrainer {
-	return &ReinforcementLearningTrainer{rl, Empty}
+	return &ReinforcementLearningTrainer{rl, tictactoe.Empty}
 }
 
 func (rlt *ReinforcementLearningTrainer) Name() string { return "reinforcement-learning-training" }
 
-func (rlt *ReinforcementLearningTrainer) Move(gs, player GameState) GameState {
-	playerMask := GameState(allO)
-	if player == X {
-		playerMask = GameState(allX)
+func (rlt *ReinforcementLearningTrainer) Move(gs, player tictactoe.GameState) tictactoe.GameState {
+	playerMask := tictactoe.GameState(tictactoe.AllO)
+	if player == tictactoe.X {
+		playerMask = tictactoe.GameState(tictactoe.AllX)
 	}
 	moves := gs.AvailableMoves()
 
@@ -101,7 +103,7 @@ func (rlt *ReinforcementLearningTrainer) RecordWin(win bool) {
 	rlt.rl[rlt.lastMove] = rlt.rl[rlt.lastMove] + stepSize*(result-rlt.rl[rlt.lastMove])
 }
 
-func (rlt *ReinforcementLearningTrainer) update(nextState GameState) {
+func (rlt *ReinforcementLearningTrainer) update(nextState tictactoe.GameState) {
 	rlt.rl[rlt.lastMove] = rlt.rl[rlt.lastMove] + stepSize*(rlt.rl[nextState]-rlt.rl[rlt.lastMove])
 	rlt.lastMove = nextState
 }

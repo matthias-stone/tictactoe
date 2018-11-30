@@ -1,4 +1,4 @@
-package tictactoe
+package bots
 
 import "testing"
 

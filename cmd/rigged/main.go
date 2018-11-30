@@ -6,11 +6,12 @@ import (
 	"time"
 
 	"github.com/matthias-stone/tictactoe"
+	"github.com/matthias-stone/tictactoe/bots"
 )
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	rl := tictactoe.NewReinforcementLearning()
+	rl := bots.NewReinforcementLearning()
 
 	trainingOpponent := Corners{}
 
@@ -21,15 +22,15 @@ func main() {
 	train(rl, trainingOpponent, 10000)
 	testResults(rl)
 	train(rl, trainingOpponent, 20000)
-	train(rl, tictactoe.MiniMaxSometimesRandom(0.5), 20000)
+	train(rl, bots.MiniMaxSometimesRandom(0.5), 20000)
 	testResults(rl)
 }
 
-func train(rl *tictactoe.ReinforcementLearning, second tictactoe.Player, rounds int) {
+func train(rl *bots.ReinforcementLearning, second tictactoe.Player, rounds int) {
 	var p1, p2 tictactoe.Player
 loop:
 	for j := 0; j < rounds; j++ {
-		rlt := tictactoe.NewReinforcementLearningTrainer(rl)
+		rlt := bots.NewReinforcementLearningTrainer(rl)
 		active, inactive := tictactoe.X, tictactoe.O
 		currentPlayer, nextPlayer := 1, 2
 		if j&1 == 1 {
@@ -44,7 +45,7 @@ loop:
 			m := p1.Move(gs, active)
 			gs |= m
 			if gs.Winner() != tictactoe.Empty {
-				_, ok := p1.(*tictactoe.ReinforcementLearningTrainer)
+				_, ok := p1.(*bots.ReinforcementLearningTrainer)
 				rlt.RecordWin(ok)
 				continue loop
 			}
@@ -91,12 +92,12 @@ func printHeader() {
 	fmt.Printf(" win/loss/draw    win/loss/draw    win/loss/draw\n")
 }
 
-func testResults(rl *tictactoe.ReinforcementLearning) {
+func testResults(rl *bots.ReinforcementLearning) {
 	rounds := 1000
 	var (
 		r1 = compete(rl, Corners{}, rounds)
-		r2 = compete(rl, tictactoe.MiniMax{}, rounds)
-		r3 = compete(Corners{}, tictactoe.MiniMax{}, rounds)
+		r2 = compete(rl, bots.MiniMax{}, rounds)
+		r3 = compete(Corners{}, bots.MiniMax{}, rounds)
 	)
 
 	fmt.Printf("%4d %4d %4d   %4d %4d %4d   %4d %4d %4d\n",

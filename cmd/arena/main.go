@@ -7,18 +7,19 @@ import (
 	"time"
 
 	"github.com/matthias-stone/tictactoe"
+	"github.com/matthias-stone/tictactoe/bots"
 )
 
 func main() {
 	players := []tictactoe.Player{
-		tictactoe.Random{},
-		tictactoe.RandomOpportunistic{},
-		tictactoe.RandomSpoiler{},
-		tictactoe.RandomOpportunisticSpoiler{},
-		tictactoe.MiniMax{},
-		tictactoe.MiniMaxSometimesRandom(0.05),
-		tictactoe.MiniMaxSometimesRandom(0.25),
-		tictactoe.MiniMaxSometimesRandom(0.5),
+		bots.Random{},
+		bots.RandomOpportunistic{},
+		bots.RandomSpoiler{},
+		bots.RandomOpportunisticSpoiler{},
+		bots.MiniMax{},
+		bots.MiniMaxSometimesRandom(0.05),
+		bots.MiniMaxSometimesRandom(0.25),
+		bots.MiniMaxSometimesRandom(0.5),
 	}
 	rand.Seed(time.Now().UnixNano())
 

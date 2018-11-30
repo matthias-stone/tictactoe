@@ -64,43 +64,43 @@ const (
 	RightMask     = Pos3 | Pos6 | Pos9 // 0x30C30
 	AngleDownMask = Pos1 | Pos5 | Pos9 // 0x30303
 	AngleUpMask   = Pos3 | Pos5 | Pos7 // 0x3330
-	allO          = 0x15555
-	allX          = 0x2AAAA
+	AllO          = 0x15555
+	AllX          = 0x2AAAA
 )
 
 func (gs GameState) Winner() GameState {
 	switch {
-	case gs&TopMask == allO&TopMask:
+	case gs&TopMask == AllO&TopMask:
 		return O
-	case gs&TopMask == allX&TopMask:
+	case gs&TopMask == AllX&TopMask:
 		return X
-	case gs&MiddleMask == allO&MiddleMask:
+	case gs&MiddleMask == AllO&MiddleMask:
 		return O
-	case gs&MiddleMask == allX&MiddleMask:
+	case gs&MiddleMask == AllX&MiddleMask:
 		return X
-	case gs&BottomMask == allO&BottomMask:
+	case gs&BottomMask == AllO&BottomMask:
 		return O
-	case gs&BottomMask == allX&BottomMask:
+	case gs&BottomMask == AllX&BottomMask:
 		return X
-	case gs&LeftMask == allO&LeftMask:
+	case gs&LeftMask == AllO&LeftMask:
 		return O
-	case gs&LeftMask == allX&LeftMask:
+	case gs&LeftMask == AllX&LeftMask:
 		return X
-	case gs&CenterMask == allO&CenterMask:
+	case gs&CenterMask == AllO&CenterMask:
 		return O
-	case gs&CenterMask == allX&CenterMask:
+	case gs&CenterMask == AllX&CenterMask:
 		return X
-	case gs&RightMask == allO&RightMask:
+	case gs&RightMask == AllO&RightMask:
 		return O
-	case gs&RightMask == allX&RightMask:
+	case gs&RightMask == AllX&RightMask:
 		return X
-	case gs&AngleDownMask == allO&AngleDownMask:
+	case gs&AngleDownMask == AllO&AngleDownMask:
 		return O
-	case gs&AngleDownMask == allX&AngleDownMask:
+	case gs&AngleDownMask == AllX&AngleDownMask:
 		return X
-	case gs&AngleUpMask == allO&AngleUpMask:
+	case gs&AngleUpMask == AllO&AngleUpMask:
 		return O
-	case gs&AngleUpMask == allX&AngleUpMask:
+	case gs&AngleUpMask == AllX&AngleUpMask:
 		return X
 	default:
 		return Empty

@@ -6,27 +6,28 @@ import (
 	"time"
 
 	"github.com/matthias-stone/tictactoe"
+	"github.com/matthias-stone/tictactoe/bots"
 )
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	rl := tictactoe.NewReinforcementLearning()
+	rl := bots.NewReinforcementLearning()
 
 	printHeader()
 	testResults(rl)
-	train(rl, tictactoe.MiniMaxSometimesRandom(0.5), 1000)
+	train(rl, bots.MiniMaxSometimesRandom(0.5), 1000)
 	testResults(rl)
-	train(rl, tictactoe.MiniMaxSometimesRandom(0.5), 10000)
+	train(rl, bots.MiniMaxSometimesRandom(0.5), 10000)
 	testResults(rl)
-	train(rl, tictactoe.MiniMaxSometimesRandom(0.5), 50000)
+	train(rl, bots.MiniMaxSometimesRandom(0.5), 50000)
 	testResults(rl)
 }
 
-func train(rl *tictactoe.ReinforcementLearning, second tictactoe.Player, rounds int) {
+func train(rl *bots.ReinforcementLearning, second tictactoe.Player, rounds int) {
 	var p1, p2 tictactoe.Player
 loop:
 	for j := 0; j < rounds; j++ {
-		rlt := tictactoe.NewReinforcementLearningTrainer(rl)
+		rlt := bots.NewReinforcementLearningTrainer(rl)
 		active, inactive := tictactoe.X, tictactoe.O
 		currentPlayer, nextPlayer := 1, 2
 		if j&1 == 1 {
@@ -41,7 +42,7 @@ loop:
 			m := p1.Move(gs, active)
 			gs |= m
 			if gs.Winner() != tictactoe.Empty {
-				_, ok := p1.(*tictactoe.ReinforcementLearningTrainer)
+				_, ok := p1.(*bots.ReinforcementLearningTrainer)
 				rlt.RecordWin(ok)
 				continue loop
 			}
@@ -88,13 +89,13 @@ func printHeader() {
 	fmt.Printf(" win/loss/draw    win/loss/draw    win/loss/draw    win/loss/draw\n")
 }
 
-func testResults(rl *tictactoe.ReinforcementLearning) {
+func testResults(rl *bots.ReinforcementLearning) {
 	rounds := 1000
 	var (
-		r1, _ = timeCompeteAndDuration(rl, tictactoe.RandomOpportunisticSpoiler{}, rounds)
+		r1, _ = timeCompeteAndDuration(rl, bots.RandomOpportunisticSpoiler{}, rounds)
 		r2, _ = timeCompeteAndDuration(rl, rl, rounds)
-		r3, _ = timeCompeteAndDuration(rl, tictactoe.MiniMaxSometimesRandom(0.1), rounds)
-		r4, _ = timeCompeteAndDuration(rl, tictactoe.MiniMax{}, rounds)
+		r3, _ = timeCompeteAndDuration(rl, bots.MiniMaxSometimesRandom(0.1), rounds)
+		r4, _ = timeCompeteAndDuration(rl, bots.MiniMax{}, rounds)
 	)
 
 	fmt.Printf("%4d %4d %4d   %4d %4d %4d   %4d %4d %4d   %4d %4d %4d\n",
